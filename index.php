@@ -14,7 +14,12 @@
     <h1 class="text-center">ADMIN ACCESS</h1>
   </div>
 
-  <button class="btn btn-primary btn-create">CREATE NEW FORM</button>
+  <!-- Button with redirection to create_form.php -->
+  <button 
+    class="btn btn-primary btn-create" 
+    onclick="window.location.href='create_form.php';">
+    CREATE NEW FORM
+  </button>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -25,13 +30,13 @@
 
 <script>
     const navLinks = document.getElementById('mainNav');
-const currentPath = window.location.pathname;
-const navLinksItems = navLinks.querySelectorAll('li a');
+    const currentPath = window.location.pathname;
+    const navLinksItems = navLinks.querySelectorAll('li a');
 
-navLinksItems.forEach(link => {
-  const linkPath = link.getAttribute('href'); 
-  if (linkPath === currentPath) {
-    link.parentElement.classList.add('active');
-  }
-});
+    navLinksItems.forEach(link => {
+      const linkPath = link.getAttribute('href'); 
+      if (linkPath === currentPath) {
+        link.parentElement.classList.add('active');
+      }
+    });
 </script>
