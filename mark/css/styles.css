@@ -1,0 +1,153 @@
+/* Importing fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500;700&display=swap');
+
+
+/* General Reset */
+body, html, ul, li, a {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif; /* Clean and modern for body text */
+}
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif; /* Bold and modern for headings */
+  font-weight: 500; /* Ensures strong emphasis */
+}
+
+/* Links */
+a {
+  font-family: 'Roboto', sans-serif;
+  text-decoration: none;
+}
+
+/* Custom class examples */
+.header-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.5rem; /* Large and bold for hero sections */
+  font-weight: 700;
+  color: #111; /* Strong emphasis color */
+}
+
+.paragraph {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem; /* Standard text size */
+  line-height: 1.8;
+  color: #555; /* Softer gray for secondary text */
+}
+/* Password Container */
+.password-container {
+  position: relative;
+}
+
+.password-container i {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* Navbar Styles */
+.navbar {
+  background: #0056D2;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.navbar-brand {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar-nav {
+  list-style: none;
+  display: flex;
+}
+
+.navbar-nav .nav-item {
+  padding: 0 15px;
+}
+
+.navbar-nav .nav-link {
+  display: block;
+  position: relative; /* Allows positioning of ::after */
+  padding: 10px 0;
+  font-size: 1rem;
+  text-align: center;
+  color: #fff;
+  transition: color 0.3s;
+  text-decoration: none; /* Remove default underline */
+}
+
+.navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 4px; /* Thickness of underline */
+  background-color: orange; /* Underline color */
+  transition: width 0.3s, left 0.1s;
+  border-radius: 10px ;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #0d6efd; /* Text color change on hover */
+}
+
+.navbar-nav .nav-link:hover::after {
+  width: 100%; /* Expand underline */
+  left: 0; /* Keep it aligned with text */
+}
+
+.navbar-nav .nav-link.active::after {
+  width: 100%;
+  left: 0;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  background: url('../img/image.png') no-repeat center/cover;
+  padding: 100px 20px;
+}
+
+.university-logo {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 2.5em;
+  color: #fff;
+}
+
+/*about section*/
+.about{
+  background-color: #007bff; /* Blue background color */
+  height: 500px; /* Adjust height as needed */
+  display: flex;
+  justify-content: center;
+}
+
+/* Mobile Navigation */
+@media (max-width: 991px) {
+  .navbar-nav {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .navbar-nav .nav-item {
+    margin: 5px 0;
+  }
+
+  .navbar-collapse {
+    background: #0056D2;
+  }
+}
