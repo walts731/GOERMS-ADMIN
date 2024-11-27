@@ -8,8 +8,9 @@
       <li class="nav-item"><a class="nav-link text-light" href="index.php">Home</a></li>
       <li class="nav-item"><a class="nav-link text-light" href="archive.php">Archive</a></li>
       <li class="nav-item"><a class="nav-link text-light" href="students.php">Students</a></li>
-      <li class="nav-item"><a class="nav-link text-light" href="exit-forms.php">Exit Forms</a></li>
-      <li class="nav-item"><a class="nav-link text-light" href="interviews.php">Interviews</a></li>
+      <li class="nav-item"><a class="nav-link text-light" href="forms.php">Forms</a></li>
+      <li class="nav-item"><a class="nav-link text-light" href="contacts.php">Contacts</a></li>
+      <li class="nav-item"><a class="nav-link text-light" href="about.php">About</a></li>
       <li class="nav-item"><a class="nav-link text-light" href="logout.php">Logout</a></li>
     </ul>
   </div>
