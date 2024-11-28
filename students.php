@@ -1,78 +1,80 @@
 <?php
-// Include database connection
+// Include the database connection file
 include('includes/connect.php');
 
-// Fetch form fields for the dynamic table headers
-$form_id = 1; // Specify the form_id for which responses are being fetched, or use a dynamic value
+// SQL query to fetch all students
+$sql = "SELECT `student_id`, `username`, `first_name`, `last_name`, `email`, `date_of_birth`, `created_at` FROM `student_user`";
+$result = $conn->query($sql);
 
-// Query to get all fields for the specific form
-$field_query = "SELECT field_id, field_label FROM form_fields WHERE form_id = ?";
-$stmt = $conn->prepare($field_query);
-$stmt->bind_param("i", $form_id);
-$stmt->execute();
-$fields_result = $stmt->get_result();
-
-// Query to get responses for this form
-$response_query = "SELECT field_id, response FROM form_responses WHERE form_id = ? ORDER BY response_id";
-$stmt = $conn->prepare($response_query);
-$stmt->bind_param("i", $form_id);
-$stmt->execute();
-$responses_result = $stmt->get_result();
-
-// Create an array to store responses for each field
-$responses_data = [];
-while ($row = $responses_result->fetch_assoc()) {
-    $responses_data[$row['field_id']][] = $row['response'];
-}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Responses</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Students List</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center">Student Responses</h1>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <!-- Dynamic table headers based on form fields -->
-                    <?php
-                    while ($field = $fields_result->fetch_assoc()) {
-                        echo "<th>" . htmlspecialchars($field['field_label']) . "</th>";
-                    }
-                    ?>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                // Get the maximum number of responses for a single field (to set the number of rows)
-                $max_responses = max(array_map('count', $responses_data));
 
-                // Loop to display each row (response)
-                for ($i = 0; $i < $max_responses; $i++) {
-                    echo "<tr>";
-                    
-                    // Loop through fields and display responses in rows
-                    foreach ($responses_data as $field_id => $responses) {
-                        // If the response exists for this field, display it
-                        echo "<td>";
-                        echo isset($responses[$i]) ? htmlspecialchars($responses[$i]) : ""; // Handle no response
-                        echo "</td>";
-                    }
+  <!-- Include the navigation bar -->
+  <?php include('includes/nav.php'); ?>
 
-                    echo "</tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Students List</h1>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Check if there are any students in the database -->
+    <?php if ($result->num_rows > 0): ?>
+
+      <!-- Table to display the students -->
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>Student ID</th>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Date of Birth</th>
+            <th>Created At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php while ($row = $result->fetch_assoc()): ?>
+            <tr>
+              <td><?php echo htmlspecialchars($row['student_id']); ?></td>
+              <td><?php echo htmlspecialchars($row['username']); ?></td>
+              <td><?php echo htmlspecialchars($row['first_name']); ?></td>
+              <td><?php echo htmlspecialchars($row['last_name']); ?></td>
+              <td><?php echo htmlspecialchars($row['email']); ?></td>
+              <td><?php echo htmlspecialchars($row['date_of_birth']); ?></td>
+              <td><?php echo htmlspecialchars($row['created_at']); ?></td>
+              <td>
+                <!-- Action button to view responses -->
+                <a href="view_responses.php?student_id=<?php echo $row['student_id']; ?>" class="btn btn-info btn-sm">View Responses</a>
+              </td>
+            </tr>
+          <?php endwhile; ?>
+        </tbody>
+      </table>
+
+    <?php else: ?>
+      <div class="alert alert-warning text-center">No students found in the database.</div>
+    <?php endif; ?>
+
+  </div>
+
+  <!-- Bootstrap JS (optional for some interactive elements) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
+
+<?php
+// Close the database connection
+$conn->close();
+?>
